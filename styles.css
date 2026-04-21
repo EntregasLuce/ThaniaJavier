@@ -1,0 +1,85 @@
+.polaroid {
+    background: white;
+    padding: 1rem 1rem 3rem 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+}
+
+.polaroid:nth-child(even) {
+    transform: rotate(3deg);
+}
+
+.polaroid:hover {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 10;
+}
+
+.timeline-line::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: #14b89c33;
+}
+
+@keyframes waveMove {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-25%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-wave {
+    animation: waveMove 10s ease-in-out infinite;
+    min-width: 150%;
+}
+
+.leaf-pattern {
+    position: relative;
+    overflow: hidden;
+    /* Vital para que las flores que sobresalen no creen scroll horizontal */
+}
+
+.leaf-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Centrado matemático perfecto */
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* No interfiere con el scroll o botones */
+    opacity: 0.10;
+    /* Muy sutil (10%) para que no compita con el texto negro */
+    z-index: 1;
+    /* Por debajo del texto */
+}
+
+.itinerary-content {
+    position: relative;
+    z-index: 10;
+    /* Por encima de la imagen */
+    text-align: center;
+    /* Alineación centrada para que haga match con el adorno */
+}
+
+/* Clases añadidas para soporte de videos e imágenes embebidas de Drive */
+.gallery-video {
+    width: 100%;
+    height: 16rem;
+    /* Equivalente a h-64 en tailwind */
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}

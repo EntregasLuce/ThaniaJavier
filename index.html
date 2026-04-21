@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Nuestra Boda - Invitación Digital</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;family=Great+Vibes&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#14b89c",
+                        "gold": "#c5a059",
+                        "eucalyptus": "#3E4E3B",
+                        "cream": "#fdfbf7",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#11211e",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "handwritten": ["Great Vibes", "cursive"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-cream font-display text-slate-900 overflow-x-hidden">
+    <!-- Top Navigation / Music Control -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-cream/80 backdrop-blur-md border-b border-primary/10">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-gold">favorite</span>
+            <span class="text-eucalyptus font-bold tracking-widest uppercase text-sm">T &amp; J</span>
+        </div>
+        <button id="music-control"
+            class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-full shadow-lg hover:bg-primary/90 transition-all">
+            <span id="music-icon" class="material-symbols-outlined text-sm">music_note</span>
+            <span id="music-text" class="text-xs font-bold">REPRODUCIR MÚSICA</span>
+        </button>
+
+        <audio id="wedding-music" loop>
+            <source
+                src="https://res.cloudinary.com/dz6lay5a6/video/upload/v1772510156/Fonseca_-_Que_Suerte_Tenerte_Audio_-_FonsecaVEVO_ufotjb.mp3"
+                type="audio/mpeg">
+        </audio>
+    </header>
+    <!-- Hero Section -->
+    <section class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-black/30 z-10"></div>
+        <div id="hero-media-container"
+            class="absolute inset-0 w-full h-full z-0 pointer-events-none bg-black/50 overflow-hidden">
+            <div id="hero-fallback-bg"
+                class="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000"></div>
+            <!-- Video para Cloudinary, usamos un tag de video normal y lo expandimos -->
+            <video id="hero-video-bg"
+                class="absolute inset-0 w-full h-full object-cover hidden opacity-0 transition-opacity duration-1000"
+                autoplay muted loop playsinline></video>
+        </div>
+        <div class="relative z-20 text-center text-white px-4">
+            <h2 class="font-handwritten text-5xl md:text-7xl mb-4 text-white drop-shadow-lg">Nuestra Boda</h2>
+            <h1 class="text-3xl md:text-5xl font-extrabold uppercase tracking-[0.2em] mb-8">Thania &amp; Javier</h1>
+            <div class="w-16 h-px bg-gold mx-auto mb-8"></div>
+            <p class="text-xl md:text-2xl font-light tracking-widest max-w-lg mx-auto font-['Manrope']">
+                “Mejores son dos que uno; porque tienen mejor paga de su trabajo. Porque si cayeren, uno levantará a
+                su compañero”<br>
+                <span class="block mt-4 font-bold text-sm tracking-widest not-italic font-['Manrope']">"Eclesiastés
+                    4:9-10"</span>
+            </p>
+            <div class="mt-8 mb-4">
+                <h3 class="text-gold font-bold tracking-widest uppercase text-xs mb-4">Faltan solo...</h3>
+                <div class="flex justify-center gap-3 md:gap-6">
+                    <div class="flex flex-col items-center">
+                        <div id="countdown-days"
+                            class="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center text-2xl md:text-3xl font-black text-white border border-white/20">
+                            0</div>
+                        <span class="mt-2 text-[10px] font-bold text-white/70 uppercase tracking-widest">Días</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div id="countdown-hours"
+                            class="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center text-2xl md:text-3xl font-black text-white border border-white/20">
+                            0</div>
+                        <span class="mt-2 text-[10px] font-bold text-white/70 uppercase tracking-widest">Horas</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div id="countdown-minutes"
+                            class="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center text-2xl md:text-3xl font-black text-white border border-white/20">
+                            0</div>
+                        <span class="mt-2 text-[10px] font-bold text-white/70 uppercase tracking-widest">Minutos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Message & Random Photo Box -->
+    <section id="random-photo-section"
+        class="py-20 bg-cream opacity-0 transition-opacity duration-1000 ease-in flex flex-col items-center justify-center relative shadow-inner">
+        <div class="max-w-2xl mx-auto px-6 text-center flex flex-col items-center gap-12">
+            <!-- Image Box -->
+            <div
+                class="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white">
+                <img id="random-photo-display" src="" alt="Momento Capturado"
+                    class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
+            </div>
+
+            <!-- Quote Container -->
+            <div class="space-y-4">
+                <p class="font-display text-lg md:text-xl text-slate-700 italic leading-relaxed">
+                    "Con inmensa alegría queremos invitarlos a acompañarnos en el día en que uniremos nuestras vidas
+                    para
+                    siempre, celebrando el amor, la felicidad y el compromiso de caminar juntos."
+                </p>
+            </div>
+
+            <!-- Event Details Container -->
+            <div class="flex flex-col items-center gap-6">
+                <div class="space-y-2">
+                    <h2 class="font-handwritten text-eucalyptus text-4xl tracking-wide">los esperamos este
+                    </h2>
+                    <p class="text-gold font-bold text-xl uppercase tracking-widest">Sabado 27 de Junio, 2026 • 07:00 pm
+                    </p>
+                </div>
+
+                <a class="inline-flex items-center gap-2 bg-gold text-white px-8 py-3 rounded-full hover:opacity-90 transition-all text-xs font-bold tracking-widest shadow-md"
+                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Boda+Tania+%26+Javier&amp;dates=20260627T190000/20260627T235959&amp;details=Celebraci%C3%B3n+de+nuestra+boda&amp;location=Valledupar,+Cesar"
+                    target="_blank">
+                    <span class="material-symbols-outlined text-sm">calendar_today</span>
+                    AGREGAR A GOOGLE CALENDAR
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details -->
+    <section class="py-20 bg-background-dark">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Ceremony Card -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-primary/5 flex flex-col">
+                    <div class="h-48 bg-cover bg-center" data-alt="Classic church interior for ceremony"
+                        style="background-image: url('')">
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col items-center text-center">
+                        <span class="material-symbols-outlined text-gold text-4xl mb-4">church</span>
+                        <h4 class="text-2xl font-bold text-eucalyptus mb-2">Ceremonia Eclesiástica</h4>
+                        <p class="text-slate-600 mb-6">Parroquia San Miguel Arcángel<br />Calle 54B #31-114, Valledupar,
+                            Cesar
+                        </p>
+                        <a class="mt-auto w-full bg-eucalyptus text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-eucalyptus/90 transition-all"
+                            href="https://maps.app.goo.gl/6uG3GyMunWu5HMFL7">
+                            <span class="material-symbols-outlined text-sm">location_on</span>
+                            VER EN GOOGLE MAPS
+                        </a>
+                    </div>
+                </div>
+                <!-- Reception Card -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-primary/5 flex flex-col">
+                    <div class="h-48 bg-cover bg-center" data-alt="Outdoor garden reception setup with fairy lights"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA1nb2dw88db5_5dWHD95TUn5x5NqSZhTHkY4OA61XLXYfH-CU9prJ5ShDgYpDFy2bGFP-KY5rWiJa9AM2TtKNpTyZwPLupoxehHyJwZeKVLkf2uxwJAxRMMezo-eistuTzM4P0Zp0lhuhzYobcQK-vp2NkEYr3IsySSEy6x9Cvp_YxJVQpajPrSqRJsI14W-TqfWJIXbnRA6znJRxULWj9bCGHNWP5Xd_4e2cFb4brogvEcABPAxfs0iZQH035SpDZ5H7CJWavLLQ')">
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col items-center text-center">
+                        <span class="material-symbols-outlined text-gold text-4xl mb-4">celebration</span>
+                        <h4 class="text-2xl font-bold text-eucalyptus mb-2">Recepción &amp; Fiesta</h4>
+                        <p class="text-slate-600 mb-6">Casa Campestre Mami Chole<br />Conjunto Campestre "Casa e Campo"
+                        </p>
+                        <a class="mt-auto w-full bg-gold text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-gold/90 transition-all"
+                            href="https://maps.app.goo.gl/kWKUghJsJQL6XHMW6">
+                            <span class="material-symbols-outlined text-sm">location_on</span>
+                            VER EN GOOGLE MAPS
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Polaroid Gallery -->
+    <section class="bg-white overflow-hidden relative">
+        <div class="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
+            <svg class="relative block w-[200%] h-[60px] fill-cream animate-wave" preserveaspectratio="none"
+                viewbox="0 0 1200 120">
+                <path
+                    d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,103.14-6.12,183.64,37,285.8,37.5,117.17.58,226-48.36,342.3-48.36,77.4,0,150,19.2,207.1,52.2V0Z">
+                </path>
+            </svg>
+        </div>
+        <div class="max-w-6xl mx-auto px-6 pt-24 pb-20">
+            <h2 class="font-handwritten text-4xl text-center text-eucalyptus mb-16">Momentos Favoritos</h2>
+            <div id="gallery-container" class="flex overflow-x-auto gap-8 pb-12 snap-x px-4 no-scrollbar"
+                style="scrollbar-width: none;"></div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-10">
+            <svg class="relative block w-[200%] h-[60px] fill-eucalyptus animate-wave" preserveaspectratio="none"
+                style="animation-direction: reverse;" viewbox="0 0 1200 120">
+                <path
+                    d="M0,120V73.71c47.79-22.2,103.59-32.17,158-28,70.36,5.37,136.33,33.31,206.8,37.5,103.14,6.12,183.64-37,285.8-37.5,117.17-.58,226,48.36,342.3,48.36,77.4,0,150-19.2,207.1-52.2V120Z">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- RSVP Section -->
+    <section class="py-20 bg-eucalyptus text-white">
+        <div class="max-w-xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4 uppercase tracking-widest">Confirma tu Asistencia</h2>
+            <p class="mb-10 text-cream/80">Por favor, confírmanos tu asistencia para
+                organizar cada detalle con cariño.</p>
+            <button
+                class="inline-flex items-center gap-4 bg-[#25D366] text-white px-8 py-5 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-2xl"
+                onclick="toggleModal()">
+                <svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24">
+                    <path
+                        d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.512-2.96-2.626-.087-.114-.694-.924-.694-1.762 0-.837.44-1.244.597-1.417.157-.174.341-.217.455-.217.114 0 .228 0 .327.004.104.004.243-.04.38.289.144.351.491 1.2.533 1.285.043.085.07.186.014.303-.056.117-.084.19-.168.287-.084.097-.176.216-.252.29-.088.085-.18.178-.077.354.103.176.458.756.983 1.225.677.601 1.248.787 1.424.874.176.088.278.073.38-.044.103-.117.44-.51.558-.687.117-.177.234-.147.395-.087.16.06.101.488 1.205 1.031.11.054.183.267.14.673zM12 2C6.477 2 2 6.477 2 12c0 1.891.528 3.654 1.45 5.152L2 22l4.983-1.312C8.36 21.574 10.101 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z">
+                    </path>
+                </svg>
+                CONFIRMAR VÍA WHATSAPP
+            </button>
+        </div>
+    </section>
+    <!-- Thank You Section -->
+    <footer class="py-24 bg-cream text-center px-6">
+        <div class="max-w-2xl mx-auto">
+            <span class="material-symbols-outlined text-gold text-5xl mb-6">spa</span>
+            <h2 class="font-handwritten text-5xl text-eucalyptus mb-6">¡Gracias por ser parte de nuestra historia!</h2>
+            <p class="text-slate-600 font-['Manrope'] leading-relaxed mb-12">
+                Después de años de compartir la vida, superar pruebas y celebrar bendiciones, hemos decidido consagrar
+                nuestro amor delante de Dios.<br>
+                Nuestro hogar ya ha sido testigo de su fidelidad, y ahora queremos sellar nuestra unión bajo su gracia.
+            </p>
+
+            <!-- Regalos, Dress Code & Info Cards Grid -->
+            <div class="max-w-6xl mx-auto mb-16 relative z-20 px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- 1) Lluvia de Sobres -->
+                    <div
+                        class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gold/20 flex flex-col items-center text-center transform transition-all duration-700 hover:scale-[1.02] opacity-0 translate-y-8 reveal-on-scroll">
+                        <h2 class="font-['Great_Vibes'] text-4xl text-eucalyptus mb-4">Lluvia de Sobres</h2>
+                        <p class="text-slate-600 font-['Manrope'] text-sm leading-relaxed">
+                            El mejor regalo es su presencia, si desean un detalle pueden hacerlo en una lluvia de
+                            sobres.
+                        </p>
+                    </div>
+
+                    <!-- 2) Dress Code Hombres -->
+                    <div
+                        class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gold/20 flex flex-col items-center text-center transform transition-all duration-700 hover:scale-[1.02] opacity-0 translate-y-8 reveal-on-scroll">
+                        <span class="material-symbols-outlined text-gold text-4xl mb-4">checkroom</span>
+                        <h3 class="text-xs font-bold text-eucalyptus uppercase tracking-[0.2em] mb-2">Dress Code Hombres
+                        </h3>
+                        <p class="text-slate-600 font-['Manrope'] text-lg font-semibold">Guayabera ó Blazer</p>
+                    </div>
+
+                    <!-- 3) Dress Code Damas -->
+                    <div
+                        class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gold/20 flex flex-col items-center text-center transform transition-all duration-700 hover:scale-[1.02] opacity-0 translate-y-8 reveal-on-scroll">
+                        <span class="material-symbols-outlined text-gold text-4xl mb-4">styler</span>
+                        <h3 class="text-xs font-bold text-eucalyptus uppercase tracking-[0.2em] mb-2">Dress Code Damas
+                        </h3>
+                        <p class="text-slate-600 font-['Manrope'] text-lg font-semibold">Vestido cóctel largo</p>
+                    </div>
+
+                    <!-- 4) Niños Dulces Sueños -->
+                    <div
+                        class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gold/20 flex flex-col items-center text-center transform transition-all duration-700 hover:scale-[1.02] opacity-0 translate-y-8 reveal-on-scroll">
+                        <span class="material-symbols-outlined text-gold text-4xl mb-4">child_care</span>
+                        <h3 class="text-xs font-bold text-eucalyptus uppercase tracking-[0.2em] mb-2">Niños</h3>
+                        <p class="text-slate-600 font-['Manrope'] text-lg font-bold">Dulces Sueños</p>
+                    </div>
+
+                    <!-- 5) Importante -->
+                    <div
+                        class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gold/20 flex flex-col items-center text-center transform transition-all duration-700 hover:scale-[1.02] opacity-0 translate-y-8 reveal-on-scroll">
+                        <span class="material-symbols-outlined text-gold text-4xl mb-4">warning</span>
+                        <h3 class="text-xs font-bold text-eucalyptus uppercase tracking-[0.2em] mb-2">Importante</h3>
+                        <p class="text-slate-600 font-['Manrope'] text-lg font-bold">Reservado color blanco, Beige y
+                            Nude</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="w-24 h-px bg-gold/30 mx-auto mb-8"></div>
+            <p class="text-eucalyptus font-bold tracking-[0.3em] text-sm uppercase">Con amor, Thania &amp; Javier</p>
+        </div>
+    </footer>
+    <!-- RSVP Modal -->
+    <div class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+        id="rsvpModal">
+        <div
+            class="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
+            <div class="p-6 bg-eucalyptus flex justify-between items-center">
+                <h3 class="text-white font-bold uppercase tracking-widest">Confirmar Asistencia</h3>
+                <button class="text-white/80 hover:text-white" onclick="toggleModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form class="p-8 space-y-6" id="rsvpForm">
+                <div>
+                    <label class="block text-xs font-bold text-eucalyptus uppercase tracking-widest mb-2">Nombre o Grupo
+                        Familiar</label>
+                    <input
+                        class="w-full border-primary/20 rounded-lg focus:ring-primary focus:border-primary px-4 py-3 text-sm"
+                        id="nombre" placeholder="Ej. Familia González" required="" type="text" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-eucalyptus uppercase tracking-widest mb-2">Alergias
+                        Alimentarias / Medicamentos</label>
+                    <textarea
+                        class="w-full border-primary/20 rounded-lg focus:ring-primary focus:border-primary px-4 py-3 text-sm"
+                        id="alergias" placeholder="Ninguna" rows="2"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-eucalyptus uppercase tracking-widest mb-2">Cantidad de
+                        personas que asistirán</label>
+                    <input
+                        class="w-full border-primary/20 rounded-lg focus:ring-primary focus:border-primary px-4 py-3 text-sm"
+                        id="asistentes" min="1" required="" type="number" value="1" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-eucalyptus uppercase tracking-widest mb-2">Cantidad de
+                        Niños</label>
+                    <input
+                        class="w-full border-primary/20 rounded-lg focus:ring-primary focus:border-primary px-4 py-3 text-sm"
+                        id="ninos" min="0" required="" type="number" value="0" />
+                </div>
+                <button
+                    class="w-full bg-[#25D366] text-white py-4 rounded-xl font-bold hover:bg-[#128C7E] transition-all flex items-center justify-center gap-3"
+                    onclick="sendToWhatsApp()" type="button">
+                    <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+                        <path
+                            d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.512-2.96-2.626-.087-.114-.694-.924-.694-1.762 0-.837.44-1.244.597-1.417.157-.174.341-.217.455-.217.114 0 .228 0 .327.004.104.004.243-.04.38.289.144.351.491 1.2.533 1.285.043.085.07.186.014.303-.056.117-.084.19-.168.287-.084.097-.176.216-.252.29-.088.085-.18.178-.077.354.103.176.458.756.983 1.225.677.601 1.248.787 1.424.874.176.088.278.073.38-.044.103-.117.44-.51.558-.687.117-.177.234-.147.395-.087.16.06.101.488 1.205 1.031.11.054.183.267.14.673zM12 2C6.477 2 2 6.477 2 12c0 1.891.528 3.654 1.45 5.152L2 22l4.983-1.312C8.36 21.574 10.101 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z">
+                        </path>
+                    </svg>
+                    ENVIAR A WHATSAPP
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="fixed inset-0 z-[110] hidden bg-black/95 items-center justify-center p-4 cursor-pointer" id="lightbox"
+        onclick="this.classList.add('hidden')"><img class="max-w-full max-h-full object-contain rounded-lg"
+            id="lightbox-img" src="" /></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
