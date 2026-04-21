@@ -229,7 +229,7 @@ function sendToWhatsApp() {
         return;
     }
 
-    const message = `¡Hola Amdrea! Confirmamos nuestra asistencia a (Boda Thania&Javier).\n\nNombre/Grupo: ${nombre}\nTotal personas: ${asistentes}\nAlergias/Med: ${alergias}\nCantidad de niños: ${ninos}`;
+    const message = `¡Hola Andrea! Confirmamos nuestra asistencia a (Boda Thania&Javier).\n\nNombre/Grupo: ${nombre}\nTotal personas: ${asistentes}\nAlergias/Med: ${alergias}\nCantidad de niños: ${ninos}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/573016413373?text=${encodedMessage}`, '_blank');
     toggleModal();
